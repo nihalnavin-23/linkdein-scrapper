@@ -1,0 +1,30 @@
+# LinkedIn Authentication & Session (Contains sensitive personal cookies)
+linkedin_cookies.json
+.linkedin_session/
+*.session
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Virtual Environment
+venv/
+env/
+.venv/
+
+# Scraped Data & Exports
+exports/*.csv
+exports/*.xlsx
+exports/*.json
+
+# Logs & Temporary Files
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# IDE Configurations
+.vscode/
+.idea/

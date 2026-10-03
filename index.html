@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Lead & Talent Scraper Pro | Real-Time Contact Intelligence</title>
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="ambient-glow glow-3"></div>
+
+    <div class="app-layout">
+        <!-- Top Navbar -->
+        <header class="glass-navbar">
+            <div class="nav-brand">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.69 1.69 0 1 0 0-3.38 1.69 1.69 0 0 0 0 3.38M7.86 18.5V10.1H5.07v8.4h2.79z"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">LeadScraper <span class="brand-pro">PRO</span></span>
+                    <span class="brand-sub">LinkedIn Talent & Contact Intelligence</span>
+                </div>
+            </div>
+
+            <div class="nav-status">
+                <span class="status-pulse"></span>
+                <span class="status-label">Engine Ready • Port 8525</span>
+            </div>
+
+            <div class="nav-actions">
+                <button id="btnPrivacyGuide" class="btn-ghost" title="Learn about LinkedIn contact privacy">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                    <span>Contact Privacy Guide</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-container">
+            <!-- Search & Filter Console -->
+            <section class="glass-card search-card">
+                <div class="search-header">
+                    <div>
+                        <h2>Target Talent Search</h2>
+                        <p class="subtitle">Extract software engineers and verified professionals with direct phone numbers & emails.</p>
+                    </div>
+                    <div class="mode-badge live-data-badge">
+                        <span class="pulse-dot"></span>
+                        <span>100% REAL LIVE LINKEDIN DATA</span>
+                    </div>
+                </div>
+
+                <form id="scraperForm" class="search-form" onsubmit="event.preventDefault(); triggerSearch();">
+                    <div class="input-grid">
+                        <!-- Role / Job Title -->
+                        <div class="form-group">
+                            <label for="roleInput">Job Title / Technical Role</label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                                <input type="text" id="roleInput" value="Software Engineer" placeholder="e.g. Software Engineer, Data Scientist" required>
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="form-group">
+                            <label for="locationInput">Target Location / Country</label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                <input type="text" id="locationInput" value="India" placeholder="e.g. India, Bengaluru, United States, Remote">
+                            </div>
+                        </div>
+
+                        <!-- Company Filter (Optional) -->
+                        <div class="form-group">
+                            <label for="companyInput">Target Company <span class="label-optional">(Optional)</span></label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 7v14M21 7v14M6 7V3h12v4M9 11h2M9 15h2M13 11h2M13 15h2"/></svg>
+                                <input type="text" id="companyInput" placeholder="e.g. Google, Amazon, Microsoft, TCS">
+                            </div>
+                        </div>
+
+                        <!-- Results Count -->
+                        <div class="form-group form-group-sm">
+                            <label for="limitSelect">Results Limit</label>
+                            <div class="input-wrapper select-wrapper">
+                                <select id="limitSelect">
+                                    <option value="10">10 Leads</option>
+                                    <option value="15" selected>15 Leads</option>
+                                    <option value="25">25 Leads</option>
+                                    <option value="50">50 Leads</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Role Quick Chips -->
+                    <div class="quick-chips-row">
+                        <span class="chips-label">Popular Roles:</span>
+                        <div class="chips-container" id="roleChips">
+                            <button type="button" class="chip active" data-val="Software Engineer">Software Engineer</button>
+                            <button type="button" class="chip" data-val="Full Stack Developer">Full Stack</button>
+                            <button type="button" class="chip" data-val="Data Scientist">Data Scientist</button>
+                            <button type="button" class="chip" data-val="DevOps Engineer">DevOps Engineer</button>
+                            <button type="button" class="chip" data-val="Backend Developer">Backend Developer</button>
+                            <button type="button" class="chip" data-val="AI / ML Engineer">AI/ML Engineer</button>
+                        </div>
+                    </div>
+
+                    <!-- Location Quick Chips -->
+                    <div class="quick-chips-row">
+                        <span class="chips-label">Locations:</span>
+                        <div class="chips-container" id="locChips">
+                            <button type="button" class="chip active" data-val="India">India</button>
+                            <button type="button" class="chip" data-val="Bengaluru">Bengaluru</button>
+                            <button type="button" class="chip" data-val="Hyderabad">Hyderabad</button>
+                            <button type="button" class="chip" data-val="United States">United States</button>
+                            <button type="button" class="chip" data-val="London, UK">London</button>
+                            <button type="button" class="chip" data-val="Remote">Remote</button>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filters & Submit Button -->
+                    <div class="search-actions-bar">
+                        <div class="toggles-group">
+                            <label class="toggle-control">
+                                <input type="checkbox" id="contactsOnlyCheck">
+                                <span class="toggle-slider"></span>
+                                <span class="toggle-text">Prioritize Leads with Phone / Email</span>
+                            </label>
+                            <label class="toggle-control">
+                                <input type="checkbox" id="deepEnrichCheck" checked>
+                                <span class="toggle-slider"></span>
+                                <span class="toggle-text">Deep Bio & Schema Parsing</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" id="btnScrape" class="btn-primary">
+                            <span class="btn-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                            </span>
+                            <span id="btnScrapeText">Search & Scrape Talent</span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Metrics Bar -->
+            <section class="metrics-grid">
+                <div class="glass-card metric-card">
+                    <div class="metric-icon metric-icon-blue">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="metric-info">
+                        <span class="metric-title">Profiles Extracted</span>
+                        <span class="metric-val" id="valTotalLeads">0</span>
+                    </div>
+                </div>
+
+                <div class="glass-card metric-card">
+                    <div class="metric-icon metric-icon-green">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <div class="metric-info">
+                        <span class="metric-title">Phone Numbers Found</span>
+                        <span class="metric-val" id="valPhonesCount">0</span>
+                    </div>
+                </div>
+
+                <div class="glass-card metric-card">
+                    <div class="metric-icon metric-icon-cyan">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <div class="metric-info">
+                        <span class="metric-title">Emails Discovered</span>
+                        <span class="metric-val" id="valEmailsCount">0</span>
+                    </div>
+                </div>
+
+                <div class="glass-card metric-card">
+                    <div class="metric-icon metric-icon-purple">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div class="metric-info">
+                        <span class="metric-title">Pipeline Latency</span>
+                        <span class="metric-val" id="valLatency">0.0s</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="glass-card results-card">
+                <!-- Results Toolbar -->
+                <div class="results-toolbar">
+                    <div class="toolbar-left">
+                        <h3>Scraped Talent Pool <span id="leadsBadgeCount" class="count-badge">0</span></h3>
+                        <div class="filter-tabs">
+                            <button class="filter-tab active" data-filter="all">All</button>
+                            <button class="filter-tab" data-filter="phone">📞 Phone Available</button>
+                            <button class="filter-tab" data-filter="email">✉️ Email Available</button>
+                        </div>
+                    </div>
+
+                    <div class="toolbar-right">
+                        <!-- Table Live Filter Search -->
+                        <div class="table-search-wrapper">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                            <input type="text" id="tableFilterInput" placeholder="Filter by name, company, skill...">
+                        </div>
+
+                        <!-- Export Dropdown Actions -->
+                        <div class="export-group">
+                            <button id="btnExportCsv" class="btn-export" title="Export to CSV">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                <span>CSV</span>
+                            </button>
+                            <button id="btnExportExcel" class="btn-export btn-export-excel" title="Export to Formatted Excel">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                <span>Excel (.xlsx)</span>
+                            </button>
+                            <button id="btnExportJson" class="btn-export" title="Export to JSON">
+                                <span>JSON</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table Container -->
+                <div class="table-responsive">
+                    <table class="leads-table" id="leadsTable">
+                        <thead>
+                            <tr>
+                                <th>Candidate</th>
+                                <th>Headline & Current Company</th>
+                                <th>Location</th>
+                                <th>Phone Number</th>
+                                <th>Email Address</th>
+                                <th>Key Skills</th>
+                                <th>Outreach & Profile</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leadsTableBody">
+                            <tr class="empty-state-row">
+                                <td colspan="7">
+                                    <div class="empty-state">
+                                        <div class="empty-icon">
+                                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                                        </div>
+                                        <h4>No Talent Scraped Yet</h4>
+                                        <p>Enter a technical role like <strong>"Software Engineer"</strong> and click <strong>"Search & Scrape Talent"</strong> to extract verified candidates.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Outreach Note Generator Modal -->
+    <div id="outreachModal" class="modal-overlay">
+        <div class="glass-card modal-content">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <div class="modal-badge-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                    </div>
+                    <div>
+                        <h3 id="modalCandidateName">Outreach for Candidate</h3>
+                        <p id="modalCandidateSubtitle">Tailored message ready for instant sending</p>
+                    </div>
+                </div>
+                <button class="modal-close" onclick="closeOutreachModal()">&times;</button>
+            </div>
+
+            <div class="modal-tabs">
+                <button class="modal-tab active" onclick="switchOutreachTab('linkedin')">LinkedIn Connection Note (<300 chars)</button>
+                <button class="modal-tab" onclick="switchOutreachTab('email')">Recruiter Cold Email</button>
+                <button class="modal-tab" onclick="switchOutreachTab('sms')">WhatsApp / SMS Direct</button>
+            </div>
+
+            <div class="modal-body">
+                <!-- LinkedIn Tab -->
+                <div id="tabContentLinkedin" class="tab-pane active">
+                    <div class="note-meta">
+                        <span>Characters: <strong id="charCount">0</strong> / 300 (Within Free LinkedIn Limit)</span>
+                    </div>
+                    <textarea id="linkedinNoteText" class="outreach-textarea" rows="4"></textarea>
+                    <button class="btn-copy-action" onclick="copyOutreach('linkedinNoteText', 'LinkedIn Note')">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        <span>Copy LinkedIn Note</span>
+                    </button>
+                </div>
+
+                <!-- Email Tab -->
+                <div id="tabContentEmail" class="tab-pane">
+                    <div class="form-group mb-3">
+                        <label>Subject Line:</label>
+                        <input type="text" id="emailSubjectInput" class="subject-input">
+                    </div>
+                    <label>Email Body:</label>
+                    <textarea id="emailBodyText" class="outreach-textarea" rows="8"></textarea>
+                    <button class="btn-copy-action" onclick="copyOutreach('emailBodyText', 'Email Body')">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        <span>Copy Email Pitch</span>
+                    </button>
+                </div>
+
+                <!-- WhatsApp / SMS Tab -->
+                <div id="tabContentSms" class="tab-pane">
+                    <div class="note-meta">
+                        <span>Target Mobile: <strong id="smsTargetPhone">+91 ...</strong></span>
+                    </div>
+                    <textarea id="smsBodyText" class="outreach-textarea" rows="4"></textarea>
+                    <button class="btn-copy-action" onclick="copyOutreach('smsBodyText', 'WhatsApp / SMS Message')">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        <span>Copy WhatsApp / SMS Message</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Privacy & Architecture Guide Modal -->
+    <div id="privacyGuideModal" class="modal-overlay">
+        <div class="glass-card modal-content modal-content-wide">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <div class="modal-badge-icon modal-badge-info">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                    </div>
+                    <div>
+                        <h3>How LinkedIn Phone Number Scraping Works</h3>
+                        <p>Technical architecture, privacy mechanics, and data enrichment</p>
+                    </div>
+                </div>
+                <button class="modal-close" onclick="closePrivacyModal()">&times;</button>
+            </div>
+
+            <div class="guide-body">
+                <div class="guide-section">
+                    <h4>1. Where are Phone Numbers on LinkedIn?</h4>
+                    <p>LinkedIn keeps user phone numbers strictly private behind three tiers of visibility:</p>
+                    <ul>
+                        <li><strong>Only Me:</strong> The user entered their phone for 2FA, but it is invisible to anyone on the web.</li>
+                        <li><strong>1st-Degree Connections Only:</strong> Visible only if you send a connection request and they accept it.</li>
+                        <li><strong>Public Summary / Headline:</strong> When job seekers explicitly add their phone numbers or email in their public bio (e.g. <em>"Contact: +91 98765 43210"</em>).</li>
+                    </ul>
+                </div>
+
+                <div class="guide-section">
+                    <h4>2. How Our Scraper Extracts Contacts Safely:</h4>
+                    <p>This engine utilizes <strong>Google X-Ray OSINT indexing + Public Crawler Schema parsing</strong>:</p>
+                    <ul>
+                        <li><strong>Bio & Snippet Detection:</strong> Scans descriptions and headlines with international Regex to catch phone numbers and direct email addresses.</li>
+                        <li><strong>Zero Account Ban Risk:</strong> Uses public search indexing instead of an authenticated LinkedIn login session, preventing your personal LinkedIn account from being flagged or banned.</li>
+                        <li><strong>B2B Enrichment Ready:</strong> Provides one-click exports (CSV/Excel) formatted for instant upload into Apollo.io, Lusha, or ContactOut for 100% direct dial matching.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
